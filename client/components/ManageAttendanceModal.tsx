@@ -60,12 +60,7 @@ export const ManageAttendanceModal = ({
   const [error, setError] = useState<string | null>(null);
   const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
   const { addPointages, updatePointage, deletePointage } = usePointages();
-
-  // Get unique groups from existing attendances
-  const availableGroups = useMemo(
-    () => Array.from(new Set(attendances.map((a) => a.group))),
-    [attendances],
-  );
+  const { allGroups } = useAllGroups();
 
   const handleAddOrEdit = async () => {
     try {
