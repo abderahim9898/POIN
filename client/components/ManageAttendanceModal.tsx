@@ -129,6 +129,7 @@ export const ManageAttendanceModal = ({
       await deletePointage(id);
       setDeleteConfirmId(null);
       onSuccess?.();
+      // Modal stays open after delete - no onOpenChange(false)
     } catch (err) {
       setError(
         err instanceof Error ? err.message : "Failed to delete attendance",
