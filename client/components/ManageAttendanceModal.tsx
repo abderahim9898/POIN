@@ -103,6 +103,7 @@ export const ManageAttendanceModal = ({
       });
       setEditingId(null);
       onSuccess?.();
+      // Modal stays open after save - no onOpenChange(false)
     } catch (err) {
       setError(
         err instanceof Error ? err.message : "Failed to save attendance",
