@@ -53,13 +53,12 @@ export const EditWorkerModal = ({
       }
 
       if (Object.keys(updates).length === 0) {
-        onOpenChange(false);
         return;
       }
 
       await updateWorkerDetails(matricule, updates);
-      onOpenChange(false);
       onSuccess?.();
+      // Modal stays open after save - no onOpenChange(false)
     } catch (err) {
       setError(
         err instanceof Error ? err.message : "Failed to update worker",
