@@ -86,6 +86,44 @@ export default function WorkerSearch() {
     }
   };
 
+  const handleOpenEditModal = (
+    matricule: string,
+    name: string,
+    group: string,
+  ) => {
+    setSelectedWorkerMatricule(matricule);
+    setSelectedWorkerName(name);
+    setSelectedWorkerGroup(group);
+    setEditModalOpen(true);
+  };
+
+  const handleOpenAttendanceModal = (
+    matricule: string,
+    name: string,
+    attendances: any[],
+  ) => {
+    setSelectedWorkerMatricule(matricule);
+    setSelectedWorkerName(name);
+    setSelectedWorkerAttendances(attendances);
+    setAttendanceModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setEditModalOpen(false);
+    setAttendanceModalOpen(false);
+    setSelectedWorkerMatricule(null);
+    setSelectedWorkerName(null);
+    setSelectedWorkerGroup(null);
+    setSelectedWorkerAttendances([]);
+  };
+
+  const handleModalSuccess = () => {
+    // Refresh data by resetting and refetching
+    setSearchQuery("");
+    setFilters({});
+    handleModalClose();
+  };
+
   // Show all workers by default, or filtered results if searching
   const getWorkerResults = () => {
     if (searchQuery.trim().length > 0) {
