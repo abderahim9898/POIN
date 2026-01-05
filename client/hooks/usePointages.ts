@@ -9,6 +9,7 @@ import {
   doc,
   Timestamp,
   QueryConstraint,
+  updateDoc,
 } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 
@@ -134,12 +135,66 @@ export const usePointages = (filters?: {
     }
   };
 
+  const updatePointage = async (
+    pointageId: string,
+    updates: Partial<Omit<Pointage, "id">>,
+  ) => {
+    try {
+      const docRef = doc(db, "pointages", pointageId);
+      await updateDoc(docRef, updates);
+      return pointageId;
+    } catch (err) {
+      throw new Error(
+        err instanceof Error ? err.message : "Failed to update pointage",
+      );
+    }
+  };
+
+  const deletePointage = async (pointageId: string) => {
+    try {
+      await deleteDoc(doc(db, "pointages", pointageId));
+      return pointageId;
+    } catch (err) {
+      throw new Error(
+        err instanceof Error ? err.message : "Failed to delete pointage",
+      );
+    }
+  };
+
+  const updateWorkerDetails = async (
+    matricule: string,
+    updates: { name?: string; group?: string },
+  ) => {
+    try {
+      const q = query(
+        collection(db, "pointages"),
+        where("matricule", "==", matricule),
+      );
+      const snapshot = await getDocs(q);
+
+      let updatedCount = 0;
+      for (const docSnapshot of snapshot.docs) {
+        await updateDoc(docSnapshot.ref, updates);
+        updatedCount++;
+      }
+
+      return updatedCount;
+    } catch (err) {
+      throw new Error(
+        err instanceof Error ? err.message : "Failed to update worker details",
+      );
+    }
+  };
+
   return {
     pointages,
     loading,
     error,
     addPointages,
     deletePointagesByDateRange,
+    updatePointage,
+    deletePointage,
+    updateWorkerDetails,
   };
 };
 
@@ -193,4 +248,15 @@ export const useWorkerSearch = (
   });
 
   return { results: groupedByWorker, loading, error };
+};
+
+export const useAllGroups = (filters?: {
+  startDate?: string;
+  endDate?: string;
+}) => {
+  const { pointages } = usePointages(filters);
+
+  const allGroups = Array.from(new Set(pointages.map((p) => p.group))).sort();
+
+  return { allGroups };
 };

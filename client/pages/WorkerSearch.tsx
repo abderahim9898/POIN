@@ -13,6 +13,8 @@ import {
 import { UnifiedFilter } from "@/components/UnifiedFilter";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
 import { ErrorAlert } from "@/components/ErrorAlert";
+import { EditWorkerModal } from "@/components/EditWorkerModal";
+import { ManageAttendanceModal } from "@/components/ManageAttendanceModal";
 import { useWorkerSearch, usePointages } from "@/hooks/usePointages";
 import {
   Search,
@@ -25,6 +27,8 @@ import {
   Download,
   ChevronLeft,
   ChevronRight,
+  Edit2,
+  CheckCircle,
 } from "lucide-react";
 import { exportWorkerPointage } from "@/lib/effectifExporter";
 import { translations } from "@/i18n/translations";
@@ -42,6 +46,20 @@ export default function WorkerSearch() {
     null,
   );
   const [currentPage, setCurrentPage] = useState(1);
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const [attendanceModalOpen, setAttendanceModalOpen] = useState(false);
+  const [selectedWorkerMatricule, setSelectedWorkerMatricule] = useState<
+    string | null
+  >(null);
+  const [selectedWorkerName, setSelectedWorkerName] = useState<string | null>(
+    null,
+  );
+  const [selectedWorkerGroup, setSelectedWorkerGroup] = useState<string | null>(
+    null,
+  );
+  const [selectedWorkerAttendances, setSelectedWorkerAttendances] = useState<
+    any[]
+  >([]);
   const {
     results: searchResults,
     loading: searchLoading,
@@ -66,6 +84,57 @@ export default function WorkerSearch() {
     } finally {
       setDownloadingWorker(null);
     }
+  };
+
+  const handleOpenEditModal = (
+    matricule: string,
+    name: string,
+    group: string,
+  ) => {
+    setSelectedWorkerMatricule(matricule);
+    setSelectedWorkerName(name);
+    setSelectedWorkerGroup(group);
+    setEditModalOpen(true);
+  };
+
+  const handleOpenAttendanceModal = (
+    matricule: string,
+    name: string,
+    attendances: any[],
+  ) => {
+    setSelectedWorkerMatricule(matricule);
+    setSelectedWorkerName(name);
+    setSelectedWorkerAttendances(attendances);
+    setAttendanceModalOpen(true);
+  };
+
+  const handleCloseEditModal = () => {
+    setEditModalOpen(false);
+  };
+
+  const handleCloseAttendanceModal = () => {
+    setAttendanceModalOpen(false);
+  };
+
+  const handleCloseAllModals = () => {
+    setEditModalOpen(false);
+    setAttendanceModalOpen(false);
+    setSelectedWorkerMatricule(null);
+    setSelectedWorkerName(null);
+    setSelectedWorkerGroup(null);
+    setSelectedWorkerAttendances([]);
+  };
+
+  const handleEditModalSuccess = () => {
+    // Keep edit modal open, just refresh data
+    setSearchQuery("");
+    setFilters({});
+  };
+
+  const handleAttendanceModalSuccess = () => {
+    // Keep attendance modal open, just refresh data
+    setSearchQuery("");
+    setFilters({});
   };
 
   // Show all workers by default, or filtered results if searching
@@ -219,7 +288,39 @@ export default function WorkerSearch() {
                     </div>
 
                     {/* Action Buttons - Responsive */}
-                    <div className="flex items-center gap-2 md:gap-2">
+                    <div className="flex items-center gap-2 md:gap-2 flex-wrap md:flex-nowrap">
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleOpenEditModal(matricule, worker.name, Array.from(groups)[0] || "");
+                        }}
+                        className="flex gap-2 flex-1 md:flex-none justify-center"
+                      >
+                        <Edit2 className="w-4 h-4" />
+                        <span className="hidden sm:inline">
+                          {translations.edit}
+                        </span>
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleOpenAttendanceModal(
+                            matricule,
+                            worker.name,
+                            worker.attendances,
+                          );
+                        }}
+                        className="flex gap-2 flex-1 md:flex-none justify-center"
+                      >
+                        <CheckCircle className="w-4 h-4" />
+                        <span className="hidden sm:inline">
+                          {translations.attendance}
+                        </span>
+                      </Button>
                       <Button
                         size="sm"
                         variant="outline"
@@ -442,6 +543,29 @@ export default function WorkerSearch() {
             </div>
           )}
         </div>
+      )}
+
+      {/* Modals */}
+      {selectedWorkerMatricule && selectedWorkerName && (
+        <>
+          <EditWorkerModal
+            open={editModalOpen}
+            onOpenChange={handleCloseEditModal}
+            matricule={selectedWorkerMatricule}
+            name={selectedWorkerName}
+            group={selectedWorkerGroup || ""}
+            onSuccess={handleEditModalSuccess}
+          />
+
+          <ManageAttendanceModal
+            open={attendanceModalOpen}
+            onOpenChange={handleCloseAttendanceModal}
+            matricule={selectedWorkerMatricule}
+            name={selectedWorkerName}
+            attendances={selectedWorkerAttendances}
+            onSuccess={handleAttendanceModalSuccess}
+          />
+        </>
       )}
     </div>
   );
