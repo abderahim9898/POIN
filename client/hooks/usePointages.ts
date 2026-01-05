@@ -141,7 +141,7 @@ export const usePointages = (filters?: {
   ) => {
     try {
       const docRef = doc(db, "pointages", pointageId);
-      await docRef.update ? (await (docRef as any).update(updates)) : console.log("Update not available");
+      await updateDoc(docRef, updates);
       return pointageId;
     } catch (err) {
       throw new Error(
