@@ -209,7 +209,7 @@ export const ManageAttendanceModal = ({
                     onChange={(value) =>
                       setFormData({ ...formData, group: value })
                     }
-                    availableGroups={availableGroups}
+                    availableGroups={allGroups}
                     placeholder={translations.selectGroup || "Select or type group..."}
                     disabled={loading}
                   />
