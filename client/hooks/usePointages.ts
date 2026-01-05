@@ -9,6 +9,7 @@ import {
   doc,
   Timestamp,
   QueryConstraint,
+  updateDoc,
 } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 
