@@ -249,3 +249,14 @@ export const useWorkerSearch = (
 
   return { results: groupedByWorker, loading, error };
 };
+
+export const useAllGroups = (filters?: {
+  startDate?: string;
+  endDate?: string;
+}) => {
+  const { pointages } = usePointages(filters);
+
+  const allGroups = Array.from(new Set(pointages.map((p) => p.group))).sort();
+
+  return { allGroups };
+};
