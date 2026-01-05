@@ -46,6 +46,20 @@ export default function WorkerSearch() {
     null,
   );
   const [currentPage, setCurrentPage] = useState(1);
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const [attendanceModalOpen, setAttendanceModalOpen] = useState(false);
+  const [selectedWorkerMatricule, setSelectedWorkerMatricule] = useState<
+    string | null
+  >(null);
+  const [selectedWorkerName, setSelectedWorkerName] = useState<string | null>(
+    null,
+  );
+  const [selectedWorkerGroup, setSelectedWorkerGroup] = useState<string | null>(
+    null,
+  );
+  const [selectedWorkerAttendances, setSelectedWorkerAttendances] = useState<
+    any[]
+  >([]);
   const {
     results: searchResults,
     loading: searchLoading,
