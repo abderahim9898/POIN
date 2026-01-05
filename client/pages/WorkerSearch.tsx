@@ -275,7 +275,39 @@ export default function WorkerSearch() {
                     </div>
 
                     {/* Action Buttons - Responsive */}
-                    <div className="flex items-center gap-2 md:gap-2">
+                    <div className="flex items-center gap-2 md:gap-2 flex-wrap md:flex-nowrap">
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleOpenEditModal(matricule, worker.name, Array.from(groups)[0] || "");
+                        }}
+                        className="flex gap-2 flex-1 md:flex-none justify-center"
+                      >
+                        <Edit2 className="w-4 h-4" />
+                        <span className="hidden sm:inline">
+                          {translations.edit}
+                        </span>
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleOpenAttendanceModal(
+                            matricule,
+                            worker.name,
+                            worker.attendances,
+                          );
+                        }}
+                        className="flex gap-2 flex-1 md:flex-none justify-center"
+                      >
+                        <CheckCircle className="w-4 h-4" />
+                        <span className="hidden sm:inline">
+                          {translations.attendance}
+                        </span>
+                      </Button>
                       <Button
                         size="sm"
                         variant="outline"
