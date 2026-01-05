@@ -550,20 +550,20 @@ export default function WorkerSearch() {
         <>
           <EditWorkerModal
             open={editModalOpen}
-            onOpenChange={handleModalClose}
+            onOpenChange={handleCloseEditModal}
             matricule={selectedWorkerMatricule}
             name={selectedWorkerName}
             group={selectedWorkerGroup || ""}
-            onSuccess={handleModalSuccess}
+            onSuccess={handleEditModalSuccess}
           />
 
           <ManageAttendanceModal
             open={attendanceModalOpen}
-            onOpenChange={handleModalClose}
+            onOpenChange={handleCloseAttendanceModal}
             matricule={selectedWorkerMatricule}
             name={selectedWorkerName}
             attendances={selectedWorkerAttendances}
-            onSuccess={handleModalSuccess}
+            onSuccess={handleAttendanceModalSuccess}
           />
         </>
       )}
