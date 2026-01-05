@@ -531,6 +531,29 @@ export default function WorkerSearch() {
           )}
         </div>
       )}
+
+      {/* Modals */}
+      {selectedWorkerMatricule && selectedWorkerName && (
+        <>
+          <EditWorkerModal
+            open={editModalOpen}
+            onOpenChange={handleModalClose}
+            matricule={selectedWorkerMatricule}
+            name={selectedWorkerName}
+            group={selectedWorkerGroup || ""}
+            onSuccess={handleModalSuccess}
+          />
+
+          <ManageAttendanceModal
+            open={attendanceModalOpen}
+            onOpenChange={handleModalClose}
+            matricule={selectedWorkerMatricule}
+            name={selectedWorkerName}
+            attendances={selectedWorkerAttendances}
+            onSuccess={handleModalSuccess}
+          />
+        </>
+      )}
     </div>
   );
 }
