@@ -13,6 +13,8 @@ import {
 import { UnifiedFilter } from "@/components/UnifiedFilter";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
 import { ErrorAlert } from "@/components/ErrorAlert";
+import { EditWorkerModal } from "@/components/EditWorkerModal";
+import { ManageAttendanceModal } from "@/components/ManageAttendanceModal";
 import { useWorkerSearch, usePointages } from "@/hooks/usePointages";
 import {
   Search,
@@ -25,6 +27,8 @@ import {
   Download,
   ChevronLeft,
   ChevronRight,
+  Edit2,
+  CheckCircle,
 } from "lucide-react";
 import { exportWorkerPointage } from "@/lib/effectifExporter";
 import { translations } from "@/i18n/translations";
