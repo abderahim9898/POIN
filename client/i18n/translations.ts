@@ -253,4 +253,5 @@ export const translations = {
   addNewAttendance: "Ajouter une nouvelle présence",
   attendanceRecordsList: "Liste des enregistrements de présence",
   noAttendanceRecords: "Aucun enregistrement de présence trouvé",
+  selectGroup: "Sélectionner ou taper un groupe",
 };
