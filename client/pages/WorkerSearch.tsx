@@ -108,7 +108,15 @@ export default function WorkerSearch() {
     setAttendanceModalOpen(true);
   };
 
-  const handleModalClose = () => {
+  const handleCloseEditModal = () => {
+    setEditModalOpen(false);
+  };
+
+  const handleCloseAttendanceModal = () => {
+    setAttendanceModalOpen(false);
+  };
+
+  const handleCloseAllModals = () => {
     setEditModalOpen(false);
     setAttendanceModalOpen(false);
     setSelectedWorkerMatricule(null);
@@ -117,11 +125,16 @@ export default function WorkerSearch() {
     setSelectedWorkerAttendances([]);
   };
 
-  const handleModalSuccess = () => {
-    // Refresh data by resetting and refetching
+  const handleEditModalSuccess = () => {
+    // Keep edit modal open, just refresh data
     setSearchQuery("");
     setFilters({});
-    handleModalClose();
+  };
+
+  const handleAttendanceModalSuccess = () => {
+    // Keep attendance modal open, just refresh data
+    setSearchQuery("");
+    setFilters({});
   };
 
   // Show all workers by default, or filtered results if searching
