@@ -174,7 +174,7 @@ export const usePointages = (filters?: {
 
       let updatedCount = 0;
       for (const docSnapshot of snapshot.docs) {
-        await (docSnapshot.ref as any).update(updates);
+        await updateDoc(docSnapshot.ref, updates);
         updatedCount++;
       }
 
