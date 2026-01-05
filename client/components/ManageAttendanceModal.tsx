@@ -209,13 +209,13 @@ export const ManageAttendanceModal = ({
 
                 <div className="space-y-2">
                   <Label htmlFor="group">{translations.group}</Label>
-                  <Input
-                    id="group"
-                    placeholder={translations.group}
+                  <GroupCombobox
                     value={formData.group}
-                    onChange={(e) =>
-                      setFormData({ ...formData, group: e.target.value })
+                    onChange={(value) =>
+                      setFormData({ ...formData, group: value })
                     }
+                    availableGroups={availableGroups}
+                    placeholder={translations.selectGroup || "Select or type group..."}
                     disabled={loading}
                   />
                 </div>
