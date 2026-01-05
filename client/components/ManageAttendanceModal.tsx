@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import {
   Dialog,
   DialogContent,
@@ -22,6 +22,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
 import { ErrorAlert } from "@/components/ErrorAlert";
+import { GroupCombobox } from "@/components/GroupCombobox";
 import { Pointage, usePointages } from "@/hooks/usePointages";
 import { translations } from "@/i18n/translations";
 import { Trash2, Edit2 } from "lucide-react";
